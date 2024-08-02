@@ -59,7 +59,12 @@
 
 // fn2(prompt(`Введи число`))
 
-const person = (name) => {
+const person = (name, surname, age) => {
+    if (age < 18) {
+        console.log(`иди домой`);
+    } else if (age > 18) {
+        console.log(`проходи`);
+    }
     console.log(`привет ${name} ${surname}, мне ${age} лет`);
 }
 
