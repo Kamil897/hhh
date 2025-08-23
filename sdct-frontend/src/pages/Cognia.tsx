@@ -38,23 +38,25 @@ export default function CogniaPage() {
   useEffect(() => { loadList(); }, []);
 
   return (
-    <div className="mt-6 grid gap-4">
-      <div className="bg-white border rounded p-3 flex items-center gap-2">
-        <select className="border rounded px-2 py-1 text-sm" value={model} onChange={(e) => setModel(e.target.value as any)}>
-          <option value="phi3">phi-3 (mock)</option>
-          <option value="gpt">GPT (opt)</option>
-          <option value="llama">LLaMA (opt)</option>
+    <div className="container py-10 grid gap-4">
+      <h1 className="text-3xl font-bold text-center">Cognia — ваш ассистент</h1>
+
+      <div className="card flex items-center gap-2">
+        <select className="input w-auto" value={model} onChange={(e) => setModel(e.target.value as any)}>
+          <option value="phi3">phi-3</option>
+          <option value="gpt">GPT</option>
+          <option value="llama">LLaMA</option>
         </select>
-        <select className="border rounded px-2 py-1 text-sm" value={teacher} onChange={(e) => setTeacher(e.target.value as any)}>
-          <option value="math">Математика</option>
-          <option value="history">История</option>
-          <option value="languages">Языки</option>
+        <select className="input w-auto" value={teacher} onChange={(e) => setTeacher(e.target.value as any)}>
+          <option value="math">математика</option>
+          <option value="history">история</option>
+          <option value="languages">английский</option>
         </select>
-        <button className="text-sm bg-blue-600 text-white rounded px-2 py-1" onClick={createConv}>Новый диалог</button>
+        <button className="btn btn-primary" onClick={createConv}>Новый диалог</button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white border rounded p-3">
+        <div className="card">
           <div className="font-semibold mb-2">Диалоги</div>
           <div className="grid gap-2">
             {convs.map((c) => (
@@ -65,21 +67,22 @@ export default function CogniaPage() {
           </div>
         </div>
 
-        <div className="bg-white border rounded p-3 md:col-span-2">
-          <div className="font-semibold mb-2">Чат</div>
-          {!active ? <div className="text-sm text-gray-600">Выберите диалог или создайте новый.</div> : (
-            <div className="grid gap-3">
-              <div className="grid gap-2 max-h-96 overflow-auto">
-                {active.messages.map((m) => (
-                  <div key={m.id} className={`text-sm px-2 py-1 rounded ${m.role==='user'?'bg-blue-100':'bg-gray-100'}`}>{m.content}</div>
-                ))}
-              </div>
-              <div className="flex gap-2">
-                <input className="flex-1 border rounded px-3 py-2" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Ваш вопрос..." />
-                <button className="bg-blue-600 text-white rounded px-3 py-2" onClick={send}>Отправить</button>
-              </div>
+        <div className="md:col-span-2">
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-col space-y-2 bg-white rounded-lg p-4 h-[500px] overflow-y-auto">
+              {!active ? (
+                <div className="text-sm text-muted">Выберите диалог или создайте новый.</div>
+              ) : (
+                active.messages.map((m) => (
+                  <div key={m.id} className={`${m.role==='user' ? 'self-end bg-primary text-white' : 'self-start bg-gray-200'} px-3 py-2 rounded-lg max-w-[85%] whitespace-pre-wrap`}>{m.content}</div>
+                ))
+              )}
             </div>
-          )}
+            <div className="flex items-start gap-2">
+              <textarea className="input h-24" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Ваш вопрос..." />
+              <button className="btn btn-primary" onClick={send}>Отправить</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
