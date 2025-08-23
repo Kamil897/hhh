@@ -18,6 +18,7 @@ export declare class ProfileService {
         theme: string;
         points: number;
         achievements: Achievement[];
+        createdAt: Date;
     }>;
     updateProfile(userId: string, data: Partial<Pick<User, 'nickname' | 'prefix' | 'avatarUrl' | 'theme'>>): Promise<{
         id: string;
@@ -28,6 +29,7 @@ export declare class ProfileService {
         theme: string;
         points: number;
         achievements: Achievement[];
+        createdAt: Date;
     }>;
     getTransactions(userId: string): Promise<Transaction[]>;
     getPurchases(userId: string): Promise<Purchase[]>;

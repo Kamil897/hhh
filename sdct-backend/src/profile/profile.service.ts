@@ -27,6 +27,7 @@ export class ProfileService {
       theme: user.theme,
       points: user.points,
       achievements: user.achievements,
+      createdAt: user.createdAt,
     };
   }
 

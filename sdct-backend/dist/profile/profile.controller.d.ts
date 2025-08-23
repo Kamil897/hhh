@@ -18,6 +18,7 @@ export declare class ProfileController {
         theme: string;
         points: number;
         achievements: import("./achievement.entity").Achievement[];
+        createdAt: Date;
     }>;
     updateMe(req: any, dto: UpdateProfileDto): Promise<{
         id: string;
@@ -28,6 +29,7 @@ export declare class ProfileController {
         theme: string;
         points: number;
         achievements: import("./achievement.entity").Achievement[];
+        createdAt: Date;
     }>;
     transactions(req: any): Promise<import("./transaction.entity").Transaction[]>;
     purchases(req: any): Promise<import("./purchase.entity").Purchase[]>;
