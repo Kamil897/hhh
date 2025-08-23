@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api } from '../lib/api';
+import { Input } from '../components/ui/Input';
+import { Button } from '../components/ui/Button';
 
 type Profile = {
   id: string;
@@ -61,10 +63,13 @@ export default function ProfilePage() {
   if (error) return <div className="mt-10 text-red-600">{error}</div>;
   if (!profile) return null;
 
+  const canEditAvatar = purchases.some((p: any) => !!p.assetUrl);
+  const prefixOptions = ['', 'STUDENT', 'PRO', 'VIP', 'MASTER'];
+
   return (
     <div className="mt-6 grid gap-6">
       <div className="bg-white border rounded p-4">
-        <h2 className="font-semibold text-lg mb-3">Profile</h2>
+        <h2 className="font-semibold text-lg mb-3">Редактирование профиля</h2>
         <form onSubmit={onSave} className="grid gap-3">
           <div className="flex items-center gap-3">
             {profile.avatarUrl ? (
@@ -78,34 +83,39 @@ export default function ProfilePage() {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <input className="border rounded px-3 py-2" placeholder="Nickname" value={form.nickname} onChange={(e) => setForm({ ...form, nickname: e.target.value })} />
-            <input className="border rounded px-3 py-2" placeholder="Prefix" value={form.prefix} onChange={(e) => setForm({ ...form, prefix: e.target.value })} />
-            <input className="border rounded px-3 py-2 md:col-span-2" placeholder="Avatar URL" value={form.avatarUrl} onChange={(e) => setForm({ ...form, avatarUrl: e.target.value })} />
-            <select className="border rounded px-3 py-2" value={form.theme} onChange={(e) => setForm({ ...form, theme: e.target.value })}>
+            <Input placeholder="Никнейм" value={form.nickname} onChange={(e) => setForm({ ...form, nickname: e.target.value })} />
+            <select className="input" value={form.prefix} onChange={(e) => setForm({ ...form, prefix: e.target.value })}>
+              {prefixOptions.map((opt) => (
+                <option key={opt} value={opt}>{opt || 'Без префикса'}</option>
+              ))}
+            </select>
+            <Input placeholder="Avatar URL" value={form.avatarUrl} onChange={(e) => setForm({ ...form, avatarUrl: e.target.value })} disabled={!canEditAvatar} className="md:col-span-2" />
+            <select className="input" value={form.theme} onChange={(e) => setForm({ ...form, theme: e.target.value })}>
               <option value="light">Light</option>
               <option value="dark">Dark</option>
               <option value="blue">Blue</option>
             </select>
           </div>
+          {!canEditAvatar && <div className="text-xs text-muted">Аватар доступен после покупки соответствующего предмета.</div>}
           <div className="flex items-center gap-3 text-sm">
-            <div className="font-medium">Points:</div>
+            <div className="font-medium">Баллы:</div>
             <div>{profile.points}</div>
           </div>
-          <button className="self-start bg-blue-600 text-white rounded px-3 py-2">Save</button>
+          <Button variant="primary" className="w-full sm:w-auto" type="submit">Сохранить</Button>
         </form>
       </div>
 
       <div className="bg-white border rounded p-4">
-        <h2 className="font-semibold text-lg mb-3">Achievements</h2>
+        <h2 className="font-semibold text-lg mb-3">Достижения</h2>
         <div className="flex flex-wrap gap-2">
           {profile.achievements?.length ? profile.achievements.map((a) => (
             <span key={a.id} className="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded">{a.title}</span>
-          )) : <div className="text-sm text-gray-500">No achievements yet</div>}
+          )) : <div className="text-sm text-gray-500">Нет достижений</div>}
         </div>
       </div>
 
       <div className="bg-white border rounded p-4">
-        <h2 className="font-semibold text-lg mb-3">Purchases</h2>
+        <h2 className="font-semibold text-lg mb-3">Покупки</h2>
         <div className="grid gap-2">
           {purchases.length ? purchases.map((p) => (
             <div key={p.id} className="flex items-center justify-between text-sm">
@@ -117,19 +127,19 @@ export default function ProfilePage() {
                 <a className="text-blue-600 underline" href={`/api/profile/asset?itemId=${encodeURIComponent(p.itemId)}`}>Open</a>
               )}
             </div>
-          )) : <div className="text-sm text-gray-500">No purchases yet</div>}
+          )) : <div className="text-sm text-gray-500">Нет покупок</div>}
         </div>
       </div>
 
       <div className="bg-white border rounded p-4">
-        <h2 className="font-semibold text-lg mb-3">Transactions</h2>
+        <h2 className="font-semibold text-lg mb-3">Транзакции</h2>
         <div className="grid gap-2">
           {transactions.length ? transactions.map((t) => (
             <div key={t.id} className="flex items-center justify-between text-sm">
               <div className="text-gray-600">{t.type}</div>
               <div className={t.amount >= 0 ? 'text-emerald-600' : 'text-red-600'}>{t.amount >= 0 ? `+${t.amount}` : t.amount}</div>
             </div>
-          )) : <div className="text-sm text-gray-500">No transactions yet</div>}
+          )) : <div className="text-sm text-gray-500">Нет транзакций</div>}
         </div>
       </div>
     </div>

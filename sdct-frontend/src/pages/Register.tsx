@@ -8,11 +8,16 @@ export default function Register() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
   const [error, setError] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    if (password !== confirm) {
+      setError('Пароли не совпадают');
+      return;
+    }
     try {
       const res = await axios.post('/api/auth/register', { email, password });
       localStorage.setItem('token', res.data.access_token);
@@ -29,8 +34,9 @@ export default function Register() {
         <form onSubmit={onSubmit} className="space-y-4">
           <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
           <Input type="password" placeholder="Пароль (мин. 6)" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <Input type="password" placeholder="Повторите пароль" value={confirm} onChange={(e) => setConfirm(e.target.value)} />
           {error && <p className="text-red-600 text-sm">{error}</p>}
-          <Button variant="secondary" type="submit">Создать аккаунт</Button>
+          <Button variant="secondary" type="submit" className="w-full">Зарегистрироваться</Button>
         </form>
         <p className="text-sm mt-3 text-center">Уже есть аккаунт? <Link to="/login" className="underline">Войти</Link></p>
       </div>

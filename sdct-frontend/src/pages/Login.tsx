@@ -30,7 +30,7 @@ export default function Login() {
           <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
           <Input type="password" placeholder="Пароль" value={password} onChange={(e) => setPassword(e.target.value)} />
           {error && <p className="text-red-600 text-sm">{error}</p>}
-          <Button variant="primary" type="submit">Войти</Button>
+          <Button variant="primary" type="submit" className="w-full">Войти</Button>
         </form>
         <p className="text-sm mt-3 text-center">Нет аккаунта? <Link to="/register" className="underline">Зарегистрироваться</Link></p>
       </div>
