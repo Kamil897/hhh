@@ -10,6 +10,7 @@ import { PaymentsModule } from './payments/payments.module';
 import { ProfileModule } from './profile/profile.module';
 import { StoreModule } from './store/store.module';
 import { GamesModule } from './games/games.module';
+import { CogniaModule } from './cognia/cognia.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { GamesModule } from './games/games.module';
     ProfileModule,
     StoreModule,
     GamesModule,
+    CogniaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -19,6 +19,7 @@ const payments_module_1 = require("./payments/payments.module");
 const profile_module_1 = require("./profile/profile.module");
 const store_module_1 = require("./store/store.module");
 const games_module_1 = require("./games/games.module");
+const cognia_module_1 = require("./cognia/cognia.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -46,6 +47,7 @@ exports.AppModule = AppModule = __decorate([
             profile_module_1.ProfileModule,
             store_module_1.StoreModule,
             games_module_1.GamesModule,
+            cognia_module_1.CogniaModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
