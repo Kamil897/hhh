@@ -1,4 +1,7 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, ManyToMany, JoinTable, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Transaction } from '../profile/transaction.entity';
+import { Purchase } from '../profile/purchase.entity';
+import { Achievement } from '../profile/achievement.entity';
 
 export type UserRole = 'user' | 'admin' | 'super-admin';
 
@@ -15,6 +18,31 @@ export class User {
 
   @Column({ type: 'varchar', length: 32, default: 'user' })
   role: UserRole;
+
+  @Column({ type: 'varchar', length: 64, nullable: true })
+  nickname: string | null;
+
+  @Column({ type: 'varchar', length: 32, nullable: true })
+  prefix: string | null;
+
+  @Column({ type: 'varchar', length: 512, nullable: true })
+  avatarUrl: string | null;
+
+  @Column({ type: 'varchar', length: 32, default: 'light' })
+  theme: string;
+
+  @Column({ type: 'int', default: 0 })
+  points: number;
+
+  @OneToMany(() => Transaction, (t) => t.user)
+  transactions: Transaction[];
+
+  @OneToMany(() => Purchase, (p) => p.user)
+  purchases: Purchase[];
+
+  @ManyToMany(() => Achievement, (a) => a.users, { cascade: true })
+  @JoinTable({ name: 'user_achievements' })
+  achievements: Achievement[];
 
   @CreateDateColumn()
   createdAt: Date;

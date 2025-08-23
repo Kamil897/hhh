@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { RealtimeModule } from './realtime/realtime.module';
 import { PaymentsModule } from './payments/payments.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { PaymentsModule } from './payments/payments.module';
     AuthModule,
     RealtimeModule,
     PaymentsModule,
+    ProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
