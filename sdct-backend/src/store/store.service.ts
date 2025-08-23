@@ -48,6 +48,15 @@ export class StoreService {
     return purchase;
   }
 
+  async useItem(userId: string, itemId: string) {
+    const item = await this.storeRepo.findOne({ where: { id: itemId } });
+    if (!item) throw new NotFoundException('Item not found');
+    const owned = await this.purchaseRepo.findOne({ where: { user: { id: userId } as any, itemId: item.id } });
+    if (!owned) throw new BadRequestException('Item not owned');
+    await this.applyItemEffect(userId, item);
+    return { ok: true };
+  }
+
   private async applyItemEffect(userId: string, item: StoreItem) {
     switch (item.type) {
       case 'prefix':

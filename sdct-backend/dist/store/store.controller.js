@@ -27,6 +27,9 @@ let StoreController = class StoreController {
     purchase(req, itemId) {
         return this.storeService.purchase(req.user.sub, itemId);
     }
+    use(req, itemId) {
+        return this.storeService.useItem(req.user.sub, itemId);
+    }
 };
 exports.StoreController = StoreController;
 __decorate([
@@ -45,6 +48,15 @@ __decorate([
     __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", void 0)
 ], StoreController.prototype, "purchase", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.Post)('use/:itemId'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('itemId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", void 0)
+], StoreController.prototype, "use", null);
 exports.StoreController = StoreController = __decorate([
     (0, common_1.Controller)('store'),
     __metadata("design:paramtypes", [store_service_1.StoreService])

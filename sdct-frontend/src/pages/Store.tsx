@@ -13,12 +13,14 @@ interface Item {
 
 export default function StorePage() {
   const [items, setItems] = useState<Item[]>([]);
-  const [filter, setFilter] = useState<'all' | Item['type']>('all');
+  const [filter, setFilter] = useState<'avatar' | 'prefix' | 'background'>('avatar');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
+  const [purchases, setPurchases] = useState<any[]>([]);
 
   useEffect(() => {
     load();
+    loadPurchases();
   }, []);
 
   async function load() {
@@ -30,11 +32,18 @@ export default function StorePage() {
     }
   }
 
+  async function loadPurchases() {
+    try {
+      const r = await api.get('/profile/purchases');
+      setPurchases(r.data);
+    } catch {}
+  }
+
   async function onPurchase(id: string) {
     try {
       setBusy(id);
       await api.post(`/store/purchase/${id}`);
-      await load();
+      await Promise.all([load(), loadPurchases()]);
       alert('Purchased');
     } catch (e: any) {
       alert(e?.response?.data?.message ?? 'Purchase failed');
@@ -43,48 +52,60 @@ export default function StorePage() {
     }
   }
 
-  async function donate(provider: 'stripe' | 'paypal') {
-    const res = await api.post(`/payments/donate/${provider}`);
-    if (res.data?.url) window.location.href = res.data.url;
+  async function onUse(id: string) {
+    try {
+      setBusy(id);
+      await api.post(`/store/use/${id}`);
+      alert('Applied');
+    } catch (e: any) {
+      alert(e?.response?.data?.message ?? 'Apply failed');
+    } finally {
+      setBusy(null);
+    }
   }
 
-  const filtered = filter === 'all' ? items : items.filter((i) => i.type === filter);
+  const owned = new Set(purchases.map((p) => p.itemId));
+  const filtered = items.filter((i) => i.type === filter);
 
   return (
-    <div className="mt-6 grid gap-6">
-      <div className="bg-white border rounded p-4">
-        <div className="flex items-center justify-between">
-          <h1 className="text-lg font-semibold">Store</h1>
-          <div className="flex items-center gap-2">
-            <select className="border rounded px-2 py-1 text-sm" value={filter} onChange={(e) => setFilter(e.target.value as any)}>
-              <option value="all">All</option>
-              <option value="avatar">Avatars</option>
-              <option value="prefix">Prefixes</option>
-              <option value="background">Backgrounds</option>
-            </select>
-            <button className="text-sm bg-purple-600 text-white rounded px-2 py-1" onClick={() => donate('stripe')}>Donate (Stripe)</button>
-            <button className="text-sm bg-yellow-500 text-white rounded px-2 py-1" onClick={() => donate('paypal')}>Donate (PayPal)</button>
-          </div>
-        </div>
-        {error && <div className="text-red-600 text-sm mt-2">{error}</div>}
-      </div>
+    <div className="container py-10 grid gap-6">
+      <h1 className="text-3xl font-bold mb-6">Магазин</h1>
 
+      {/* Tabs */}
+      <div className="card flex flex-wrap items-center gap-2">
+        {(['avatar','prefix','background'] as const).map((t) => (
+          <button key={t} className={`btn ${filter===t?'btn-primary':'btn-secondary'}`} onClick={() => setFilter(t)}>
+            {t === 'avatar' ? 'Аватары' : t === 'prefix' ? 'Префиксы' : 'Фоны'}
+          </button>
+        ))}
+      </div>
+      {error && <div className="text-red-600 text-sm">{error}</div>}
+
+      {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {filtered.map((item) => (
-          <div key={item.id} className="card flex flex-col justify-between">
-            <div>
-              <div className="font-medium">{item.name}</div>
-              <div className="text-sm text-gray-600">Type: {item.type}</div>
-              {item.description && <div className="text-sm mt-1">{item.description}</div>}
-              {!!item.assetUrl && item.type === 'avatar' && (
-                <div className="text-xs text-gray-500 mt-1">Asset locked until purchase</div>
+          <div key={item.id} className="card flex flex-col gap-3">
+            {/* Preview */}
+            <div className="w-full h-32 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+              {item.type === 'avatar' && item.assetUrl ? (
+                <img src={item.assetUrl} alt={item.name} className="h-full object-cover" />
+              ) : (
+                <span className="text-muted text-sm">Preview</span>
               )}
             </div>
-            <div className="text-right mt-3">
-              <div className="font-semibold">{item.price} pts</div>
-              <button disabled={busy === item.id} className="btn btn-primary w-full sm:w-auto mt-2 text-sm" onClick={() => onPurchase(item.id)}>
-                {busy === item.id ? '...' : 'Buy'}
-              </button>
+            {/* Info */}
+            <div className="flex-1">
+              <div className="font-semibold">{item.name}</div>
+              <div className="text-sm text-muted">{item.type}</div>
+            </div>
+            {/* Price + Action */}
+            <div className="flex items-center justify-between">
+              <div className="font-semibold">💎 {item.price}</div>
+              {owned.has(item.id) ? (
+                <button disabled={busy === item.id} className="btn btn-primary w-full sm:w-auto" onClick={() => onUse(item.id)}>Использовать</button>
+              ) : (
+                <button disabled={busy === item.id} className="btn btn-secondary w-full sm:w-auto" onClick={() => onPurchase(item.id)}>Купить</button>
+              )}
             </div>
           </div>
         ))}

@@ -16,4 +16,10 @@ export class StoreController {
   purchase(@Req() req: any, @Param('itemId') itemId: string) {
     return this.storeService.purchase(req.user.sub, itemId);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('use/:itemId')
+  use(@Req() req: any, @Param('itemId') itemId: string) {
+    return this.storeService.useItem(req.user.sub, itemId);
+  }
 }

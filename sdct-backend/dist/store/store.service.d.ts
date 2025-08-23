@@ -11,5 +11,8 @@ export declare class StoreService {
     constructor(storeRepo: Repository<StoreItem>, purchaseRepo: Repository<Purchase>, txRepo: Repository<Transaction>, usersService: UsersService);
     listActive(): Promise<StoreItem[]>;
     purchase(userId: string, itemId: string): Promise<Purchase>;
+    useItem(userId: string, itemId: string): Promise<{
+        ok: boolean;
+    }>;
     private applyItemEffect;
 }
