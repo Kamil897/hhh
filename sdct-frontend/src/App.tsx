@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Store from './pages/Store';
+import Games from './pages/Games';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <div className="flex gap-3">
               <Link to="/profile" className="text-sm hover:underline">Profile</Link>
               <Link to="/store" className="text-sm hover:underline">Store</Link>
+              <Link to="/games" className="text-sm hover:underline">Games</Link>
               <Link to="/login" className="text-sm hover:underline">Login</Link>
               <Link to="/register" className="text-sm hover:underline">Register</Link>
             </div>
@@ -26,6 +28,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/store" element={<Store />} />
+            <Route path="/games" element={<Games />} />
           </Routes>
         </main>
       </div>

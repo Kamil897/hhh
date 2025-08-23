@@ -9,6 +9,7 @@ import { RealtimeModule } from './realtime/realtime.module';
 import { PaymentsModule } from './payments/payments.module';
 import { ProfileModule } from './profile/profile.module';
 import { StoreModule } from './store/store.module';
+import { GamesModule } from './games/games.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { StoreModule } from './store/store.module';
     PaymentsModule,
     ProfileModule,
     StoreModule,
+    GamesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
