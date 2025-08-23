@@ -39,7 +39,10 @@ export default function CogniaPage() {
 
   return (
     <div className="container py-10 grid gap-4">
-      <h1 className="text-3xl font-bold text-center">Cognia — ваш ассистент</h1>
+      <h1 className="text-3xl font-bold text-center">
+        Cognia — ваш ассистент
+        <span className="ml-2 align-middle" title="Защищено SDCT AES-256">🔒</span>
+      </h1>
 
       <div className="card flex items-center gap-2">
         <select className="input w-auto" value={model} onChange={(e) => setModel(e.target.value as any)}>

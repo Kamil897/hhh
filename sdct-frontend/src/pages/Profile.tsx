@@ -78,6 +78,7 @@ export default function ProfilePage() {
         <div className="text-xl font-bold">{form.prefix ? `[${form.prefix}] ` : ''}{profile.nickname || 'No nickname'}</div>
         <div className="text-sm text-muted">{profile.email}</div>
         {profile.createdAt && <div className="text-xs text-muted">С нами с {new Date(profile.createdAt).toLocaleDateString()}</div>}
+        <div className="mt-2 text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-lg" title="Защищено SDCT AES-256">SDCT Secure</div>
         <div className="mt-4 bg-primary text-white px-4 py-2 rounded-lg">Баллы: {profile.points}</div>
       </div>
 

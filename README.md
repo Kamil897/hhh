@@ -98,12 +98,7 @@ Passwords are always hashed with bcrypt.
 - Модели: `phi3` (mock по умолчанию), опционально `gpt`, `llama`.
 - Учителя: математика, история, языки (влияет на стиль ответа).
 - Хранение истории диалога (шифруется SDCT AES-256-GCM).
-- API:
-  - `GET /cognia/conversations`
-  - `POST /cognia/conversations` `{ model, teacher, title? }`
-  - `GET /cognia/conversations/:id`
-  - `POST /cognia/conversations/:id/messages` `{ content }`
-- UI: `/cognia` (выбор модели/учителя, диалоги, чат).
+- UI: `/cognia` (выбор модели/учителя, диалоги, чат) — 🔒 Защищено SDCT AES-256.
 
 ### Complaints (жалобы)
 - Пользователь: `POST /complaints` `{ category, text }` (текст шифруется SDCT).
@@ -118,14 +113,24 @@ Passwords are always hashed with bcrypt.
   - `GET/POST/PUT/DELETE /admin/store/items`
 - Cognia settings (super‑admin):
   - `GET/PUT /admin/cognia/settings` (флаги allowPhi3/allowGpt/allowLlama)
-- UI: `/admin` (вкладки Users/Store/Cognia/Complaints).
+- UI: `/admin` (вкладки Users/Store/Cognia/Complaints/Settings).
 
 ### SDCT Encryption (AES‑256‑GCM)
 - Сервис `SdctCryptoService`: формат `SDCTv1:<iv_b64>:<data_b64>:<tag_b64>`.
 - Шифруются и помечаются SDCT:
   - Сообщения Cognia (`cognia_messages.sdctTag='SDCT'`).
   - Тексты жалоб (`complaints.sdctTag='SDCT'`).
+- В UI: 🔒 возле заголовка Cognia; бейдж SDCT Secure в профиле.
 - Расшифровка выполняется на чтение в соответствующих сервисах.
+
+## Screenshots
+Add your screenshots (or links) here:
+- Login: ./docs/screens/login.png
+- Profile: ./docs/screens/profile.png
+- Shop: ./docs/screens/shop.png
+- Games: ./docs/screens/games.png
+- Cognia: ./docs/screens/cognia.png
+- Admin Panel: ./docs/screens/admin.png
 
 ## Development Notes
 - TypeORM `synchronize=true` только для разработки.
