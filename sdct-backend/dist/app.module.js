@@ -20,6 +20,8 @@ const profile_module_1 = require("./profile/profile.module");
 const store_module_1 = require("./store/store.module");
 const games_module_1 = require("./games/games.module");
 const cognia_module_1 = require("./cognia/cognia.module");
+const complaints_module_1 = require("./complaints/complaints.module");
+const admin_module_1 = require("./admin/admin.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -48,6 +50,8 @@ exports.AppModule = AppModule = __decorate([
             store_module_1.StoreModule,
             games_module_1.GamesModule,
             cognia_module_1.CogniaModule,
+            complaints_module_1.ComplaintsModule,
+            admin_module_1.AdminModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

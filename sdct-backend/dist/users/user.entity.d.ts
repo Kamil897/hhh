@@ -7,6 +7,8 @@ export declare class User {
     email: string;
     passwordHash: string;
     role: UserRole;
+    isBanned: boolean;
+    isMuted: boolean;
     nickname: string | null;
     prefix: string | null;
     avatarUrl: string | null;

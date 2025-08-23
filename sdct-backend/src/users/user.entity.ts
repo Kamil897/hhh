@@ -19,6 +19,12 @@ export class User {
   @Column({ type: 'varchar', length: 32, default: 'user' })
   role: UserRole;
 
+  @Column({ type: 'boolean', default: false })
+  isBanned: boolean;
+
+  @Column({ type: 'boolean', default: false })
+  isMuted: boolean;
+
   @Column({ type: 'varchar', length: 64, nullable: true })
   nickname: string | null;
 

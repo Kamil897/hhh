@@ -11,6 +11,8 @@ import { ProfileModule } from './profile/profile.module';
 import { StoreModule } from './store/store.module';
 import { GamesModule } from './games/games.module';
 import { CogniaModule } from './cognia/cognia.module';
+import { ComplaintsModule } from './complaints/complaints.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -36,6 +38,8 @@ import { CogniaModule } from './cognia/cognia.module';
     StoreModule,
     GamesModule,
     CogniaModule,
+    ComplaintsModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],

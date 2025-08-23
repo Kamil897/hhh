@@ -19,6 +19,8 @@ let User = class User {
     email;
     passwordHash;
     role;
+    isBanned;
+    isMuted;
     nickname;
     prefix;
     avatarUrl;
@@ -47,6 +49,14 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'varchar', length: 32, default: 'user' }),
     __metadata("design:type", String)
 ], User.prototype, "role", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'boolean', default: false }),
+    __metadata("design:type", Boolean)
+], User.prototype, "isBanned", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'boolean', default: false }),
+    __metadata("design:type", Boolean)
+], User.prototype, "isMuted", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'varchar', length: 64, nullable: true }),
     __metadata("design:type", Object)

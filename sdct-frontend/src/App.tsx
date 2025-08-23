@@ -5,6 +5,8 @@ import Profile from './pages/Profile';
 import Store from './pages/Store';
 import Games from './pages/Games';
 import Cognia from './pages/Cognia';
+import Admin from './pages/Admin';
+import Report from './pages/Report';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
               <Link to="/store" className="text-sm hover:underline">Store</Link>
               <Link to="/games" className="text-sm hover:underline">Games</Link>
               <Link to="/cognia" className="text-sm hover:underline">Cognia</Link>
+              <Link to="/admin" className="text-sm hover:underline">Admin</Link>
+              <Link to="/report" className="text-sm hover:underline">Report</Link>
               <Link to="/login" className="text-sm hover:underline">Login</Link>
               <Link to="/register" className="text-sm hover:underline">Register</Link>
             </div>
@@ -32,6 +36,8 @@ function App() {
             <Route path="/store" element={<Store />} />
             <Route path="/games" element={<Games />} />
             <Route path="/cognia" element={<Cognia />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/report" element={<Report />} />
           </Routes>
         </main>
       </div>
