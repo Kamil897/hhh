@@ -1,8 +1,7 @@
-type InputProps = {
-  type?: string;
-  placeholder?: string;
-};
+import React from 'react';
 
-export const Input = ({ type = 'text', placeholder }: InputProps) => {
-  return <input type={type} placeholder={placeholder} className="input" />;
+type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
+
+export const Input = ({ type = 'text', className, ...rest }: InputProps) => {
+  return <input type={type} className={`input ${className ?? ''}`} {...rest} />;
 };

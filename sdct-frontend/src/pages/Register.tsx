@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { Button } from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -21,15 +23,17 @@ export default function Register() {
   }
 
   return (
-    <div className="mt-10">
-      <h1 className="text-2xl font-semibold mb-4">Register</h1>
-      <form onSubmit={onSubmit} className="space-y-3">
-        <input className="w-full border rounded px-3 py-2" placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input className="w-full border rounded px-3 py-2" placeholder="Password (min 6)" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        {error && <p className="text-red-600 text-sm">{error}</p>}
-        <button className="w-full bg-green-600 text-white rounded px-3 py-2">Create account</button>
-      </form>
-      <p className="text-sm mt-3">Have an account? <Link to="/login" className="underline">Login</Link></p>
+    <div className="container flex items-center justify-center h-screen">
+      <div className="card w-full max-w-md">
+        <h1 className="text-2xl font-bold mb-6 text-center">Регистрация</h1>
+        <form onSubmit={onSubmit} className="space-y-4">
+          <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Input type="password" placeholder="Пароль (мин. 6)" value={password} onChange={(e) => setPassword(e.target.value)} />
+          {error && <p className="text-red-600 text-sm">{error}</p>}
+          <Button variant="secondary" type="submit">Создать аккаунт</Button>
+        </form>
+        <p className="text-sm mt-3 text-center">Уже есть аккаунт? <Link to="/login" className="underline">Войти</Link></p>
+      </div>
     </div>
   );
 }
