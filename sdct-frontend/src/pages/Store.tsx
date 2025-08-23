@@ -69,9 +69,9 @@ export default function StorePage() {
         {error && <div className="text-red-600 text-sm mt-2">{error}</div>}
       </div>
 
-      <div className="grid gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {filtered.map((item) => (
-          <div key={item.id} className="bg-white border rounded p-4 flex items-start justify-between">
+          <div key={item.id} className="card flex flex-col justify-between">
             <div>
               <div className="font-medium">{item.name}</div>
               <div className="text-sm text-gray-600">Type: {item.type}</div>
@@ -80,9 +80,9 @@ export default function StorePage() {
                 <div className="text-xs text-gray-500 mt-1">Asset locked until purchase</div>
               )}
             </div>
-            <div className="text-right">
+            <div className="text-right mt-3">
               <div className="font-semibold">{item.price} pts</div>
-              <button disabled={busy === item.id} className="mt-2 bg-blue-600 text-white rounded px-3 py-1 text-sm" onClick={() => onPurchase(item.id)}>
+              <button disabled={busy === item.id} className="btn btn-primary w-full sm:w-auto mt-2 text-sm" onClick={() => onPurchase(item.id)}>
                 {busy === item.id ? '...' : 'Buy'}
               </button>
             </div>

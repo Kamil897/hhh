@@ -20,14 +20,14 @@ function Quiz() {
   }
 
   return (
-    <div className="bg-white border rounded p-4">
+    <div className="card">
       <h2 className="font-semibold mb-2">Викторина</h2>
       {!q ? <div>Загрузка...</div> : (
         <div>
           <div className="mb-2">{q.question}</div>
           <div className="grid gap-2">
             {q.answers.map((a, i) => (
-              <button key={i} className="border rounded px-3 py-2 text-left hover:bg-gray-50" onClick={() => answer(i)}>{a}</button>
+              <button key={i} className="btn w-full sm:w-auto border rounded px-3 py-2 text-left hover:bg-gray-50" onClick={() => answer(i)}>{a}</button>
             ))}
           </div>
           <div className="mt-2 text-sm text-gray-700">{res}</div>
@@ -72,14 +72,14 @@ function RPS() {
   }
 
   return (
-    <div className="bg-white border rounded p-4">
+    <div className="card">
       <h2 className="font-semibold mb-2">Камень-Ножницы-Бумага (онлайн)</h2>
       <div className="text-sm text-gray-600 mb-2">Статус: {status}</div>
-      <div className="flex gap-2 mb-2">
-        <button className="border rounded px-3 py-1" onClick={join}>Найти соперника</button>
-        <button className="border rounded px-3 py-1" onClick={() => move('rock')}>Камень</button>
-        <button className="border rounded px-3 py-1" onClick={() => move('paper')}>Бумага</button>
-        <button className="border rounded px-3 py-1" onClick={() => move('scissors')}>Ножницы</button>
+      <div className="grid grid-cols-2 sm:flex gap-2 mb-2">
+        <button className="btn w-full sm:w-auto border" onClick={join}>Найти соперника</button>
+        <button className="btn w-full sm:w-auto border" onClick={() => move('rock')}>Камень</button>
+        <button className="btn w-full sm:w-auto border" onClick={() => move('paper')}>Бумага</button>
+        <button className="btn w-full sm:w-auto border" onClick={() => move('scissors')}>Ножницы</button>
       </div>
       {result && (
         <div className="text-sm">Раунд: A = {result.a}, B = {result.b}, Победитель: {result.winner}</div>
@@ -90,7 +90,7 @@ function RPS() {
 
 export default function GamesPage() {
   return (
-    <div className="mt-6 grid gap-6">
+    <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
       <Quiz />
       <RPS />
     </div>
