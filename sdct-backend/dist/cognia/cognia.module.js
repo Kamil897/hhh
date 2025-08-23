@@ -14,12 +14,13 @@ const message_entity_1 = require("./message.entity");
 const cognia_service_1 = require("./cognia.service");
 const cognia_controller_1 = require("./cognia.controller");
 const cognia_provider_1 = require("./cognia.provider");
+const sdct_module_1 = require("../sdct/sdct.module");
 let CogniaModule = class CogniaModule {
 };
 exports.CogniaModule = CogniaModule;
 exports.CogniaModule = CogniaModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([conversation_entity_1.Conversation, message_entity_1.Message])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([conversation_entity_1.Conversation, message_entity_1.Message]), sdct_module_1.SdctModule],
         providers: [cognia_service_1.CogniaService, cognia_provider_1.CogniaProvider],
         controllers: [cognia_controller_1.CogniaController],
     })

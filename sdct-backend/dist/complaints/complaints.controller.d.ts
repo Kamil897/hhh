@@ -6,7 +6,7 @@ export declare class ComplaintsController {
         category: string;
         text: string;
     }): Promise<import("./complaint.entity").Complaint>;
-    list(status?: 'open' | 'resolved' | 'rejected'): Promise<import("./complaint.entity").Complaint[]>;
+    list(status?: 'open' | 'resolved' | 'rejected'): Promise<any[]>;
     resolve(id: string): Promise<import("typeorm").UpdateResult>;
     reject(id: string): Promise<import("typeorm").UpdateResult>;
 }

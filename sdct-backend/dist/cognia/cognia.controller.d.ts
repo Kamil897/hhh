@@ -14,7 +14,14 @@ export declare class CogniaController {
     create(req: any, dto: CreateConvDto): Promise<import("./conversation.entity").Conversation>;
     get(req: any, id: string): Promise<import("./conversation.entity").Conversation>;
     send(req: any, id: string, dto: SendMessageDto): Promise<{
-        assistant: import("./message.entity").Message;
+        assistant: {
+            content: string;
+            id: string;
+            conversation: import("./conversation.entity").Conversation;
+            role: import("./message.entity").CogniaRole;
+            sdctTag: string;
+            createdAt: Date;
+        };
     }>;
 }
 export {};

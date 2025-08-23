@@ -17,6 +17,7 @@ let Message = class Message {
     conversation;
     role;
     content;
+    sdctTag;
     createdAt;
 };
 exports.Message = Message;
@@ -36,6 +37,10 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'text' }),
     __metadata("design:type", String)
 ], Message.prototype, "content", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'varchar', length: 16, default: 'SDCT' }),
+    __metadata("design:type", String)
+], Message.prototype, "sdctTag", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)

@@ -17,17 +17,21 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const complaint_entity_1 = require("./complaint.entity");
+const sdct_crypto_service_1 = require("../sdct/sdct-crypto.service");
 let ComplaintsService = class ComplaintsService {
     repo;
-    constructor(repo) {
+    crypto;
+    constructor(repo, crypto) {
         this.repo = repo;
+        this.crypto = crypto;
     }
-    create(authorId, category, text) {
-        const c = this.repo.create({ author: { id: authorId }, category, text, status: 'open' });
+    async create(authorId, category, text) {
+        const c = this.repo.create({ author: { id: authorId }, category, text: this.crypto.encrypt(text), status: 'open' });
         return this.repo.save(c);
     }
-    list(status) {
-        return this.repo.find({ where: status ? { status } : {}, order: { createdAt: 'DESC' }, relations: ['author'] });
+    async list(status) {
+        const items = await this.repo.find({ where: status ? { status } : {}, order: { createdAt: 'DESC' }, relations: ['author'] });
+        return items.map((c) => ({ ...c, text: this.crypto.decrypt(c.text) }));
     }
     updateStatus(id, status) {
         return this.repo.update({ id }, { status });
@@ -37,6 +41,7 @@ exports.ComplaintsService = ComplaintsService;
 exports.ComplaintsService = ComplaintsService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(complaint_entity_1.Complaint)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        sdct_crypto_service_1.SdctCryptoService])
 ], ComplaintsService);
 //# sourceMappingURL=complaints.service.js.map

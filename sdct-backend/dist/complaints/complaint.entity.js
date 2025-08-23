@@ -17,6 +17,7 @@ let Complaint = class Complaint {
     author;
     category;
     text;
+    sdctTag;
     status;
     createdAt;
 };
@@ -37,6 +38,10 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'text' }),
     __metadata("design:type", String)
 ], Complaint.prototype, "text", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'varchar', length: 16, default: 'SDCT' }),
+    __metadata("design:type", String)
+], Complaint.prototype, "sdctTag", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'varchar', length: 16, default: 'open' }),
     __metadata("design:type", String)

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Conversation, CogniaModel, CogniaTeacher } from './conversation.entity';
 import { Message, CogniaRole } from './message.entity';
 import { CogniaProvider } from './cognia.provider';
+import { SdctCryptoService } from '../sdct/sdct-crypto.service';
 
 @Injectable()
 export class CogniaService {
@@ -11,6 +12,7 @@ export class CogniaService {
     @InjectRepository(Conversation) private readonly convRepo: Repository<Conversation>,
     @InjectRepository(Message) private readonly msgRepo: Repository<Message>,
     private readonly provider: CogniaProvider,
+    private readonly crypto: SdctCryptoService,
   ) {}
 
   async listConversations(userId: string) {
@@ -20,6 +22,8 @@ export class CogniaService {
   async getConversation(userId: string, id: string) {
     const conv = await this.convRepo.findOne({ where: { id, user: { id: userId } as any }, relations: ['messages'] });
     if (!conv) throw new NotFoundException('Conversation not found');
+    // decrypt messages on read
+    conv.messages = conv.messages.map((m) => ({ ...m, content: this.crypto.decrypt(m.content) } as any));
     return conv;
   }
 
@@ -30,15 +34,17 @@ export class CogniaService {
 
   async sendMessage(userId: string, convId: string, content: string) {
     const conv = await this.getConversation(userId, convId);
-    const userMsg = this.msgRepo.create({ conversation: { id: conv.id } as any, role: 'user', content });
+    const encUser = this.crypto.encrypt(content);
+    const userMsg = this.msgRepo.create({ conversation: { id: conv.id } as any, role: 'user', content: encUser });
     await this.msgRepo.save(userMsg);
 
     const history = await this.msgRepo.find({ where: { conversation: { id: conv.id } as any }, order: { createdAt: 'ASC' } });
-    const assistantText = await this.provider.generate({ model: conv.model, teacher: conv.teacher, messages: history.map(m => ({ role: m.role as CogniaRole, content: m.content })) });
-    const assistantMsg = this.msgRepo.create({ conversation: { id: conv.id } as any, role: 'assistant', content: assistantText });
+    const assistantText = await this.provider.generate({ model: conv.model, teacher: conv.teacher, messages: history.map(m => ({ role: m.role as CogniaRole, content: this.crypto.decrypt(m.content) })) });
+    const encAssistant = this.crypto.encrypt(assistantText);
+    const assistantMsg = this.msgRepo.create({ conversation: { id: conv.id } as any, role: 'assistant', content: encAssistant });
     await this.msgRepo.save(assistantMsg);
     await this.convRepo.update({ id: conv.id }, { updatedAt: new Date() } as any);
 
-    return { assistant: assistantMsg };
+    return { assistant: { ...assistantMsg, content: assistantText } };
   }
 }

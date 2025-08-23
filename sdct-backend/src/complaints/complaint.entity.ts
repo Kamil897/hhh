@@ -17,6 +17,9 @@ export class Complaint {
   @Column({ type: 'text' })
   text: string;
 
+  @Column({ type: 'varchar', length: 16, default: 'SDCT' })
+  sdctTag: string;
+
   @Column({ type: 'varchar', length: 16, default: 'open' })
   status: ComplaintStatus;
 

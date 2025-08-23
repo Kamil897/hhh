@@ -17,6 +17,9 @@ export class Message {
   @Column({ type: 'text' })
   content: string;
 
+  @Column({ type: 'varchar', length: 16, default: 'SDCT' })
+  sdctTag: string;
+
   @CreateDateColumn()
   createdAt: Date;
 }

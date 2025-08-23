@@ -5,6 +5,7 @@ export declare class Complaint {
     author: User | null;
     category: string;
     text: string;
+    sdctTag: string;
     status: ComplaintStatus;
     createdAt: Date;
 }

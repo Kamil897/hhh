@@ -5,5 +5,6 @@ export declare class Message {
     conversation: Conversation;
     role: CogniaRole;
     content: string;
+    sdctTag: string;
     createdAt: Date;
 }

@@ -22,6 +22,7 @@ const games_module_1 = require("./games/games.module");
 const cognia_module_1 = require("./cognia/cognia.module");
 const complaints_module_1 = require("./complaints/complaints.module");
 const admin_module_1 = require("./admin/admin.module");
+const sdct_module_1 = require("./sdct/sdct.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -42,6 +43,7 @@ exports.AppModule = AppModule = __decorate([
                     synchronize: configService.get('DB_SYNC', 'true') === 'true',
                 }),
             }),
+            sdct_module_1.SdctModule,
             users_module_1.UsersModule,
             auth_module_1.AuthModule,
             realtime_module_1.RealtimeModule,

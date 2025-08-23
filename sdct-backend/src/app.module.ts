@@ -13,6 +13,7 @@ import { GamesModule } from './games/games.module';
 import { CogniaModule } from './cognia/cognia.module';
 import { ComplaintsModule } from './complaints/complaints.module';
 import { AdminModule } from './admin/admin.module';
+import { SdctModule } from './sdct/sdct.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AdminModule } from './admin/admin.module';
         synchronize: configService.get<string>('DB_SYNC', 'true') === 'true',
       }),
     }),
+    SdctModule,
     UsersModule,
     AuthModule,
     RealtimeModule,
