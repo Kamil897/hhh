@@ -7,6 +7,9 @@ import Games from './pages/Games';
 import Cognia from './pages/Cognia';
 import Admin from './pages/Admin';
 import Report from './pages/Report';
+import GameMenu from './pages/GameMenu';
+import Leaderboard from './pages/Leaderboard';
+import QuizGame from './pages/QuizGame';
 
 function App() {
   return (
@@ -38,6 +41,9 @@ function App() {
             <Route path="/cognia" element={<Cognia />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/report" element={<Report />} />
+            <Route path="/games/menu" element={<GameMenu />} />
+            <Route path="/games/leaderboard" element={<Leaderboard />} />
+            <Route path="/games/quiz" element={<QuizGame />} />
           </Routes>
         </main>
       </div>
