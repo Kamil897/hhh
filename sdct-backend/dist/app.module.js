@@ -17,6 +17,7 @@ const auth_module_1 = require("./auth/auth.module");
 const realtime_module_1 = require("./realtime/realtime.module");
 const payments_module_1 = require("./payments/payments.module");
 const profile_module_1 = require("./profile/profile.module");
+const store_module_1 = require("./store/store.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -42,6 +43,7 @@ exports.AppModule = AppModule = __decorate([
             realtime_module_1.RealtimeModule,
             payments_module_1.PaymentsModule,
             profile_module_1.ProfileModule,
+            store_module_1.StoreModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

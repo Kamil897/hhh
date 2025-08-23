@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import Store from './pages/Store';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
             <Link to="/" className="font-semibold">StuDent-ChaT</Link>
             <div className="flex gap-3">
               <Link to="/profile" className="text-sm hover:underline">Profile</Link>
+              <Link to="/store" className="text-sm hover:underline">Store</Link>
               <Link to="/login" className="text-sm hover:underline">Login</Link>
               <Link to="/register" className="text-sm hover:underline">Register</Link>
             </div>
@@ -23,6 +25,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/store" element={<Store />} />
           </Routes>
         </main>
       </div>
